@@ -13,6 +13,8 @@ angular.module('itunes').controller('mainCtrl', function($scope, itunesService){
         {field: 'AlbumArt', displayName: 'Album Art', width: '110px', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><img src="{{row.getProperty(col.field)}}"></div>'},
         {field: 'Type', displayName: 'Type'},
         {field: 'CollectionPrice', displayName: 'Collection Price'},
+          {field: 'ReleaseDate', displayName: 'Release Date'},
+
       ]
   };
 
@@ -20,13 +22,22 @@ angular.module('itunes').controller('mainCtrl', function($scope, itunesService){
 
   //First inject itunesService into your controller.
 
+  //itunesService.getArtist("Danzig")
 
   //Now write a function that will call the method on the itunesService that is responsible for getting the data from iTunes, whenever the user clicks the submit button
   //*remember, that method should be expecting an artist name. The artist name is coming from the input box on index.html, head over there and check if that input box is tied to any specific model we could use.
   //Also note that that method should be retuning a promise, so you could use .then in this function. 
     
     //Code here
-  
+    $scope.getSongData = function() {
+        itunesService.getArtist($scope.artist)
+            .then(function(response) {
+
+                $scope.songData = response;
+                $scope.date = response.data
+                console.log(response);
+            })
+    }
 
 
 
